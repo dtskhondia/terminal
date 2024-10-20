@@ -1,5 +1,6 @@
 package ge.bog.terminal.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import java.time.LocalDateTime;
 
@@ -9,6 +10,6 @@ public record PaymentDto(
     Long providerId,
     String abonentCode,
     Long paymentAmount,
-    String status,
-    LocalDateTime createTime
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) String status,
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) LocalDateTime createTime
 ){}

@@ -7,9 +7,9 @@ import ge.bog.terminal.mapper.DebtMapper;
 import ge.bog.terminal.mapper.PaymentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +17,7 @@ public class SSTApiService {
     @Value("${external-api.sst-service.base-url}")
     private String baseUrl;
 
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
     private final DebtMapper debtMapper;
     private final PaymentMapper paymentMapper;
 
@@ -27,11 +27,13 @@ public class SSTApiService {
 
     public Payment pay(Payment payment){
         return paymentMapper.mapExternal(
-            restTemplate.postForEntity(
-                baseUrl+"/payments",
-                paymentMapper.mapExternal(payment) ,
-                PaymentDtoExternal.class
-            ).getBody()
+            restClient.post()
+                .uri(baseUrl+"/payments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(paymentMapper.mapExternal(payment))
+                .retrieve()
+                .toEntity(PaymentDtoExternal.class)
+                .getBody()
         );
     }
 }
