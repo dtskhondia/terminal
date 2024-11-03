@@ -1,9 +1,6 @@
 package ge.bog.terminal.controller;
 
-import ge.bog.terminal.domain.Debt;
-import ge.bog.terminal.dto.DebtDto;
 import ge.bog.terminal.exception.ExceptionResponse;
-import ge.bog.terminal.mapper.DebtMapper;
 import ge.bog.terminal.service.DebtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,19 +8,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/debt")
 public class DebtController {
     private final DebtService debtService;
-    private final DebtMapper debtMapper;
 
     @Operation(summary = "Verify Debt")
     @ApiResponses(value = {
@@ -42,11 +36,15 @@ public class DebtController {
             content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
         )
     })
-    @GetMapping
-    DebtDto verify(
-        @Parameter(description = "Debt to to verified")
-        @RequestBody @Valid DebtDto debtDto
+    @GetMapping()
+    BigDecimal verify(
+        @Parameter(name="terminalId", description = "terminal Id", example = "1")
+        @RequestParam Long terminalId,
+        @Parameter(name="providerId", description = "Provider Id", example = "1")
+        @RequestParam Long providerId,
+        @Parameter(name="abonentCode", description = "Abonent Code", example = "100000")
+        @RequestParam String abonentCode
     ){
-        return debtMapper.map(debtService.verify(debtMapper.map(debtDto)));
+        return debtService.verify(terminalId, providerId, abonentCode);
     }
 }

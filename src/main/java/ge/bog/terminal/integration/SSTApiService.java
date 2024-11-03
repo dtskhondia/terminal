@@ -1,9 +1,12 @@
 package ge.bog.terminal.integration;
 
-import ge.bog.terminal.domain.Debt;
+import ge.bog.terminal.domain.Fee;
 import ge.bog.terminal.domain.Payment;
 
+import java.util.List;
+
 public interface SSTApiService {
-    Debt verify(Debt debt);
     Payment pay(Payment payment);
+    List<Fee> getFees(Long terminalId, Long providerId, String abonentCode);
+    List<Payment> getPayments(Long terminalId, Long providerId, String abonentCode);
 }

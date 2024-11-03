@@ -24,7 +24,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final PaymentMapper paymentMapper;
 
-    @Operation(summary = "Debt Payment")
+    @Operation(summary = "Pay")
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",

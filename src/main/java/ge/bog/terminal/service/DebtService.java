@@ -1,7 +1,7 @@
 package ge.bog.terminal.service;
 
-import ge.bog.terminal.domain.Debt;
+import java.math.BigDecimal;
 
 public interface DebtService {
-    Debt verify(Debt debt);
+    BigDecimal verify(Long terminalId, Long providerId, String abonentCode);
 }

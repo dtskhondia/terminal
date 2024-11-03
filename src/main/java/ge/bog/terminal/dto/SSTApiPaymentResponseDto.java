@@ -2,14 +2,15 @@ package ge.bog.terminal.dto;
 
 import lombok.Builder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Builder
-public record SSTApiPaymentDto(
-    Long terminalId,
-    Long providerId,
+public record SSTApiPaymentResponseDto(
+    SSTApiTerminalDto terminal,
+    SSTApiProviderDto provider,
     String abonentCode,
-    Long amount,
+    BigDecimal amount,
     String status,
     LocalDateTime createTime
 ){}
