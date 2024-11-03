@@ -2,7 +2,7 @@ package ge.bog.terminal.mapper;
 
 import ge.bog.terminal.domain.Payment;
 import ge.bog.terminal.dto.PaymentDto;
-import ge.bog.terminal.dto.PaymentDtoExternal;
+import ge.bog.terminal.dto.SSTApiPaymentDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,7 +16,7 @@ public interface PaymentMapper {
     @Mapping(source = "paymentAmount", target = "amount")
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "createTime", ignore = true)
-    PaymentDtoExternal mapExternal(Payment payment);
+    SSTApiPaymentDto mapExternal(Payment payment);
     @Mapping(source = "amount", target = "paymentAmount")
-    Payment mapExternal(PaymentDtoExternal paymentDtoExternal);
+    Payment mapExternal(SSTApiPaymentDto SSTApiPaymentDto);
 }

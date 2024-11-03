@@ -1,10 +1,13 @@
 package ge.bog.terminal.controller;
 
 import ge.bog.terminal.dto.PaymentDto;
+import ge.bog.terminal.exception.ExceptionResponse;
 import ge.bog.terminal.mapper.PaymentMapper;
 import ge.bog.terminal.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -29,7 +32,13 @@ public class PaymentController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "Payment Failed"
+            description = "Payment Failed",
+            content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "502",
+            description = "SST API Server Error",
+            content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
         )
     })
     @PostMapping("/")

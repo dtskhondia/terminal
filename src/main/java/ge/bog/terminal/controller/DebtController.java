@@ -2,10 +2,13 @@ package ge.bog.terminal.controller;
 
 import ge.bog.terminal.domain.Debt;
 import ge.bog.terminal.dto.DebtDto;
+import ge.bog.terminal.exception.ExceptionResponse;
 import ge.bog.terminal.mapper.DebtMapper;
 import ge.bog.terminal.service.DebtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -30,7 +33,13 @@ public class DebtController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "Debt Verification Failed"
+            description = "Debt Verification Failed",
+            content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "502",
+            description = "SST API Server Error",
+            content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
         )
     })
     @GetMapping

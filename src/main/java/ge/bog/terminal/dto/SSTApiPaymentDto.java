@@ -2,11 +2,14 @@ package ge.bog.terminal.dto;
 
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Builder
-public record DebtDtoExternal(
+public record SSTApiPaymentDto(
     Long terminalId,
     Long providerId,
     String abonentCode,
-    Long amount
+    Long amount,
+    String status,
+    LocalDateTime createTime
 ){}
-
